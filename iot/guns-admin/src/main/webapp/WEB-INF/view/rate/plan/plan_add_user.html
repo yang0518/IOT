@@ -1,0 +1,63 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<div class="form-horizontal" id="planInfoForm">
+
+			<div class="row">
+				<div class="col-sm-6 b-r">
+					<#input id="ratePlan" name="资费计划名称" underline="true" />
+					
+					<#input id="ratePlanCost" name="每个订户收费(元)" underline="true" />
+					
+					<#select id="ratePlanType"  name="计划类型" underline="true">
+						<option value="1">月付 - 灵活共享</option>
+                        <option value="2">预付 - 灵活共享</option>
+					</#select>
+					
+					<#select id="ratePlanPayType" name="付款方式" underline="true">
+						<option value="1">月付 </option>
+                        <option value="2">预付</option>
+					</#select>
+					
+				</div>
+				<div class="col-sm-6">
+					<div id="planInfoContent">
+						<#input id="ratePlanId" name="资费计划Id" underline="true" />
+						
+						<#input id="ratePlanFlow" name="计划内流量(MB)" underline="true" />
+				
+						<#input id="citySel" name="用户" underline="true" readonly="readonly" hidden="deptid"
+						clickFun="UserInfoDlg.showDeptSelectTree(); return false;"
+						style="background-color: #ffffff !important;"/>
+						
+						<#select id="userId" name="用户" underline="true">
+						<option value="0">系统 </option>
+						</#select>
+						
+					</div>
+				</div>
+			</div>
+
+			<!-- 这是部门选择的下拉框 -->
+			<div id="menuContent" class="menuContent"
+				 style="display: none; position: absolute; z-index: 200;">
+				<ul id="treeDemo" class="ztree tree-box" style="width: 249px !important;"></ul>
+			</div>
+
+			<div class="row btn-group-m-t">
+				<div class="col-sm-10">
+					<#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="PlanInfoDlg.addSubmit()"/>
+					<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="PlanInfoDlg.close()"/>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<script src="${ctxPath}/static/modular/rate/plan/plan_info.js"></script>
+<script>
+    laydate.render({
+        elem: '#birthday'
+    });
+</script>
+@}

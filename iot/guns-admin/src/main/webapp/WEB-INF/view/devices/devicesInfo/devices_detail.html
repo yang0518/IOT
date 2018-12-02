@@ -1,0 +1,61 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+	<div class="ibox-title">
+        <h5>设备详情</h5>
+    </div>
+	<div class="ibox-content">
+		<div class="form-horizontal" id="devicesInfoForm">
+
+			<input type="hidden" id="id" value="${devices.id}">
+			<input type="hidden" id="statusValue" value="${devices.statusName}">
+
+			<div class="row">
+				<div class="col-sm-6 b-r">
+					<#input id="iccid" name="ICCID" underline="true" value="${devices.iccid}"  disabled="disabled"/>
+					
+					<#input id="imei" name="IMEI" underline="true" value="${devices.imei}"  disabled="disabled"/>
+					
+					<#input id="status" name="SIM卡状态" underline="true" value="${devices.statusName}" disabled="disabled"/>
+
+					<#input id="ctdDataUsage" name="周期累计用量(MB)" underline="true" value="${devices.ctdDataUsage}"  disabled="disabled"/>
+					
+					<#input id="dateActivated" name="激活时间" underline="true" value="${devices.dateActivated}"  disabled="disabled"/>
+					
+				</div>
+				<div class="col-sm-6">
+					<div id="driverInfoContent">
+						<#input id="msisdn" name="MSISDN" underline="true" value="${devices.msisdn}"  disabled="disabled"/>
+				
+						<#input id="imsi" name="IMSI" underline="true" value="${devices.imsi}" disabled="disabled"/>
+						
+						<#input id="ratePlan" name="资费计划" underline="true" value="${devices.ratePlanName}" disabled="disabled"/>
+						
+						<#input id="customer" name="客户" underline="true" value="${devices.userName}" disabled="disabled"/>
+						
+						<#input id="dateAdded" name="创建时间" underline="true" value="${devices.dateAdded}"  disabled="disabled"/>
+					
+						
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<#input id="sessionTime" name="最近连接时间" underline="true" value="${devices.sessionTime}" disabled="disabled"/>
+			</div>
+
+			<div class="row btn-group-m-t">
+				<div class="col-sm-10">
+					<#button btnCss="danger" name="关闭" id="cancel" icon="fa-eraser" clickFun="DevicesInfoDlg.close()"/>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<script src="${ctxPath}/static/modular/devices/devicesInfo/devices_info.js"></script>
+<script>
+    laydate.render({
+        elem: '#birthday'
+    });
+</script>
+@}

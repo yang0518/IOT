@@ -1,0 +1,74 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>设备列表</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="iccid" name="ICCID" />
+                            </div>
+                            
+                            <div class="col-sm-3">
+                                <#NameCon id="imei" name="IMEI" />
+                            </div>
+                            
+                            <div class="col-sm-3">
+                                <#NameCon id="msisdn" name="MSISDN" />
+                            </div>
+                            
+                            <div class="col-sm-3">
+                                <#NameCon id="imsi" name="IMSI" />
+                            </div>
+                            
+                            <div class="col-sm-3">
+                                <#SelectCon id="status" name="SIM卡状态" >
+                                    <option value="ALL">全部</option>
+                                    <option value="TEST_READY">可测试</option>
+                                    <option value="INVENTORY">库存</option>
+                                    <option value="ACTIVATION_READY">可激活</option>
+                                    <option value="ACTIVATED">已激活</option>
+                                    <option value="RETIRED">已停用</option>
+                                    <option value="DEACTIVATED">已失效</option>
+                                </#SelectCon>
+                            </div>
+                            
+                            	<!-- <div class="col-sm-3">
+                                <#NameCon id="userId" name="用户" />
+                            </div> -->
+                            
+                            <div class="col-sm-3">
+                                <#TimeCon id="beginTime" name="开始时间" isTime="false" pattern="YYYY-MM-DD" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#TimeCon id="endTime" name="结束时间" isTime="false" pattern="YYYY-MM-DD" />
+                            </div>
+                            
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Devices.search()"/>
+                            </div>
+                        </div>
+                        
+                        <div class="hidden-xs" id="devicesTableToolbar" role="group">
+								<#button name="查看详情" icon="fa-plus" clickFun="Devices.detail()"/>
+	                            @if(shiro.hasPermission("/devices/editStatus")){
+	                                <#button name="修改状态" icon="fa-edit" clickFun="Devices.editStatus()" space="true"/>
+	                            @}	
+	                            @if(shiro.hasPermission("/devices/editUser")){
+	                                <#button name="修改归属用户" icon="fa-edit" clickFun="Devices.editUser()" space="true"/>
+	                            @}
+						</div>
+                       
+                        <#table id="devicesTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/devices/devicesInfo/devices.js"></script>
+@}

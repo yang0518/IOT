@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.rate.dao.RatePlanMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.rate.model.RatePlan">
+		<id column="id" property="id" />
+		<result column="rate_plan" property="ratePlan" />
+		<result column="rate_plan_id" property="ratePlanId" />
+		<result column="rate_plan_name" property="ratePlanName" />
+		<result column="rate_plan_cost" property="ratePlanCost" />
+		<result column="rate_plan_flow" property="ratePlanFlow" />
+		<result column="rate_plan_type" property="ratePlanType" />
+		<result column="rate_plan_pay_type" property="ratePlanPayType" />
+		<result column="user_id" property="userId" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+    <sql id="Base_Column_List">
+        id, 
+        rate_plan as ratePlan, 
+        rate_plan_id as ratePlanId,
+        rate_plan_name as ratePlanName,
+        rate_plan_cost as ratePlanCost,
+        rate_plan_flow as ratePlanFlow,
+        rate_plan_type as ratePlanType,
+        rate_plan_pay_type as ratePlanPayType,
+        user_id as userId,
+        create_time as createTime
+    </sql>
+
+     <select id="selectRatePlan" resultType="map">
+		select 
+		<include refid="Base_Column_List" />
+		from dev_rate_plan where 1 = 1
+		<if test="userId != null and userId !=''">
+			and user_id = #{userId}
+		</if>
+		<choose>
+			<when test="orderByField != null and orderByField !=''">
+				<choose>
+					<when test="isAsc == true">
+						order by ${orderByField} ASC
+					</when>
+					<otherwise>
+						order by ${orderByField} DESC
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				order by create_time DESC
+			</otherwise>
+		</choose>
+	</select> 
+	
+	<select id="selectRatePlanByUserId" resultMap="BaseResultMap">
+        select * from dev_rate_plan where user_id = #{userId}
+    </select>
+
+    
+
+</mapper>

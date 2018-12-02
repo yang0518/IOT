@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.devices.dao.DevicesMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.devices.model.Devices">
+		<id column="id" property="id" />
+		<result column="iccid" property="iccid" />
+		<result column="status" property="status" />
+		<result column="rate_plan" property="ratePlan" />
+		<result column="communication_plan" property="communicationPlan" />
+		<result column="imsi" property="imsi" />
+		<result column="msisdn" property="msisdn" />
+		<result column="imei" property="imei" />
+		<result column="customer" property="customer" />
+		<result column="endConsumerId" property="endConsumerId" />
+		<result column="dateActivated" property="dateActivated" />
+		<result column="dateUpdated" property="dateUpdated" />
+		<result column="dateShipped" property="dateShipped" />
+		<result column="dateAdded" property="dateAdded" />
+		<result column="accountId" property="accountId" />
+		<result column="euiccid" property="euiccid" />
+		<result column="operatorCustom1" property="operatorCustom1" />
+		<result column="operatorCustom2" property="operatorCustom2" />
+		<result column="operatorCustom3" property="operatorCustom3" />
+		<result column="operatorCustom4" property="operatorCustom4" />
+		<result column="operatorCustom5" property="operatorCustom5" />
+		<result column="globalSimType" property="globalSimType" />
+		<result column="customerCustom1" property="customerCustom1" />
+		<result column="customerCustom2" property="customerCustom2" />
+		<result column="customerCustom3" property="customerCustom3" />
+		<result column="customerCustom4" property="customerCustom4" />
+		<result column="customerCustom5" property="customerCustom5" />
+		<result column="modemID" property="modemID" />
+		<result column="fixedIPAddress" property="fixedIPAddress" />
+		<result column="deviceID" property="deviceID" />
+		<result column="accountCustom1" property="accountCustom1" />
+		<result column="accountCustom2" property="accountCustom2" />
+		<result column="accountCustom3" property="accountCustom3" />
+		<result column="accountCustom4" property="accountCustom4" />
+		<result column="accountCustom5" property="accountCustom5" />
+		<result column="accountCustom6" property="accountCustom6" />
+		<result column="accountCustom7" property="accountCustom7" />
+		<result column="accountCustom8" property="accountCustom8" />
+		<result column="accountCustom9" property="accountCustom9" />
+		<result column="accountCustom10" property="accountCustom10" />
+		<result column="simNotes" property="simNotes" />
+		<result column="ctdDataUsage" property="ctdDataUsage" />
+		<result column="ctdSMSUsage" property="ctdSMSUsage" />
+		<result column="ctdSessionCount" property="ctdSessionCount" />
+		<result column="ctdVoiceUsage" property="ctdVoiceUsage" />
+		<result column="overageLimitReached" property="overageLimitReached" />
+		<result column="overageLimitOverride" property="overageLimitOverride" />
+		<result column="flow_num" property="flowNum" />
+		<result column="flow_num_used" property="flowNumUsed" />
+		<result column="flow_num_real" property="flowNumReal" />
+		<result column="user_id" property="userId" />
+		<result column="date_session_started" property="dateSessionStarted" />
+		<result column="date_session_ended" property="dateSessionEnded" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+    <sql id="Base_Column_List">
+        id, iccid, status, rate_plan as ratePlan, communication_plan as communicationPlan, 
+        imsi, msisdn, imei,customer,dateActivated,dateUpdated,dateShipped,dateAdded,
+        accountId, ctdDataUsage,ctdSMSUsage,ctdSessionCount,ctdVoiceUsage,overageLimitReached,
+        overageLimitOverride,flow_num as flowNum,flow_num_used as flowNumUsed,flow_num_real as flowNumReal,
+        user_id as userId,date_session_started as dateSessionStarted,date_session_ended as dateSessionEnded,create_time as createTime
+    </sql>
+
+    <select id="selectDevices" resultType="map">
+		select 
+		<include refid="Base_Column_List" />
+		from dev_devices_info where 1 = 1
+		<if test="beginTime != null and beginTime !='' and endTime != null and endTime != ''">
+			and (create_time between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+		</if>
+		<if test="iccid != null and iccid !=''">
+			and iccid like CONCAT('%',#{iccid},'%')
+		</if>
+		<if test="userId != null and userId !=''">
+			and user_id = #{userId}
+		</if>
+		<if test="imei != null and imei !=''">
+			and imei like CONCAT('%',#{imei},'%')
+		</if>
+		<if test="imsi != null and imsi !=''">
+			and imsi like CONCAT('%',#{imsi},'%')
+		</if>
+		<if test="msisdn != null and msisdn !=''">
+			and msisdn = like CONCAT('%',#{msisdn},'%')
+		</if>
+		<if test="status != null and status !=''">
+			and status = #{status}
+		</if>
+		<choose>
+			<when test="orderByField != null and orderByField !=''">
+				<choose>
+					<when test="isAsc == true">
+						order by ${orderByField} ASC
+					</when>
+					<otherwise>
+						order by ${orderByField} DESC
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				order by create_time DESC
+			</otherwise>
+		</choose>
+	</select>
+
+    
+
+</mapper>
